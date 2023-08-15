@@ -68,6 +68,7 @@ def create_systemd_service(command, description, user, group, working_directory)
         f.write(content)
 
     print(f"Service {new_service_name} created. Use 'sudo systemctl start {new_service_name}' to start it.")
+    print(f"Service {new_service_name} created. use 'sudo systemctl enable {new_service_name}' to enable it (start on boot)")
 
 def main():
     parser = argparse.ArgumentParser(description="Create a systemd service with a sneaky name similar to an existing one")
