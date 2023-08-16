@@ -17,6 +17,7 @@ User={user}
 Group={group}
 Environment=PATH=/usr/bin:/usr/local/bin
 WorkingDirectory={working_directory}
+RestartSec=1min
 
 [Install]
 WantedBy=multi-user.target
@@ -60,6 +61,7 @@ def create_systemd_service(command, description, user, group, working_directory)
         description=description,
         command=command,
         user=user,
+	new_service_name=new_service_name,
         group=group,
         working_directory=working_directory
     )
@@ -82,7 +84,10 @@ def main():
     parser.add_argument("--self-delete", action="store_true", help="Delete the script after executing")
 
     args = parser.parse_args()
-    create_systemd_service(args.command, args.description, args.user, args.group, args.working_directory)
+    command = args.command
+    #while '"' in command:
+    command.replace('"','\\"')
+    create_systemd_service(command, args.description, args.user, args.group, args.working_directory)
     
     # Check if self-delete is set and if so, delete the script
     if args.self_delete:
