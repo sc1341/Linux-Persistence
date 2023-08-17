@@ -85,8 +85,6 @@ def main():
 
     args = parser.parse_args()
     command = args.command
-    #while '"' in command:
-    command.replace('"','\\"')
     create_systemd_service(command, args.description, args.user, args.group, args.working_directory)
     
     # Check if self-delete is set and if so, delete the script
